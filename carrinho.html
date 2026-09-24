@@ -203,8 +203,61 @@ tailwind.config = { darkMode: "class", theme: { extend: {
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script src="cart.js"></script>
+<script>
+window.CONFIG = {
+  SUPABASE_URL: "https://frwcxsnxvfdwskmgcenw.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZyd2N4c254dmZkd3NrbWdjZW53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyMjk4OTcsImV4cCI6MjEwNTgwNTg5N30.nR9_DT4TBZDCkYvoVE6VP-CCKSORFJ6L1tYudLXD1pY",
+  WHATSAPP: "5562991300833",
+  LOJA: "Pop Pet Center",
+  UNIDADE: "Pedro Miranda • Senador Canedo"
+};
+</script>
+<script>
+const Cart = (() => {
+  const KEY = "petshop_cart_v1";
+  let items = [];
+  try { items = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { items = []; }
+  const save = () => {
+    try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {}
+    document.dispatchEvent(new CustomEvent("cart:change"));
+  };
+  const find = id => items.find(i => i.produto_id === id);
+  return {
+    all: () => items,
+    count: () => items.reduce((s, i) => s + i.quantidade, 0),
+    total: () => items.reduce((s, i) => s + i.quantidade * i.preco, 0),
+    qty: id => (find(id) || {}).quantidade || 0,
+    add(p) {
+      const it = find(p.id), atual = it ? it.quantidade : 0;
+      if (atual >= p.estoque) return false;
+      if (it) { it.quantidade++; it.preco = Number(p.preco); it.estoque = p.estoque; }
+      else items.push({ produto_id: p.id, nome: p.nome, preco: Number(p.preco), foto_url: p.foto_url || "", quantidade: 1, estoque: p.estoque });
+      save();
+      return true;
+    },
+    setQty(id, q) {
+      const it = find(id); if (!it) return;
+      if (q <= 0) items = items.filter(i => i.produto_id !== id);
+      else it.quantidade = Math.min(q, it.estoque);
+      save();
+    },
+    sync(lista) {
+      const removidos = [];
+      items = items.filter(i => {
+        const p = lista.find(x => x.id === i.produto_id);
+        if (!p || p.estoque <= 0) { removidos.push(i.nome); return false; }
+        i.nome = p.nome; i.preco = Number(p.preco); i.foto_url = p.foto_url || ""; i.estoque = p.estoque;
+        i.quantidade = Math.min(i.quantidade, p.estoque);
+        return true;
+      });
+      save();
+      return removidos;
+    },
+    remove(id) { items = items.filter(i => i.produto_id !== id); save(); },
+    clear() { items = []; save(); }
+  };
+})();
+</script>
 <script>
 const CFG = window.CONFIG;
 const $ = id => document.getElementById(id);
