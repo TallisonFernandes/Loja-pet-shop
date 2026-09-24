@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Painel do dono</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&amp;family=Quicksand:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>@layer base{html,body{margin:0;width:100%}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px)}.pt-safe{padding-top:env(safe-area-inset-top,0px)}}body{min-height:100dvh}::-webkit-scrollbar{display:none}</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{
+colors:{"surface":"#e9ffed","primary":"#006d39","primary-container":"#1fa85f","on-primary":"#ffffff","secondary":"#924c00","secondary-container":"#fd8b18","on-secondary-container":"#623000","on-surface":"#0b1f14","on-surface-variant":"#3d4a3f","outline":"#6d7a6e","surface-container":"#dcf4e1","surface-container-low":"#e1fae7","surface-container-high":"#d6eedc","surface-container-lowest":"#ffffff","error":"#ba1a1a","error-container":"#ffdad6","on-error-container":"#93000a","inverse-surface":"#213528"},
+borderRadius:{DEFAULT:"1rem",lg:"2rem",full:"9999px"},
+fontFamily:{"title-md":["Quicksand"],"headline-md":["Quicksand"],"label-sm":["Nunito Sans"],"label-md":["Nunito Sans"],"body-sm":["Nunito Sans"],"body-md":["Nunito Sans"]},
+fontSize:{"title-md":["1.125rem",{lineHeight:"1.5rem",fontWeight:"600"}],"headline-md":["1.25rem",{lineHeight:"1.75rem",fontWeight:"600"}],"label-sm":["0.6875rem",{lineHeight:"0.875rem",fontWeight:"700"}],"label-md":["0.75rem",{lineHeight:"1rem",fontWeight:"700"}],"body-sm":["0.75rem",{lineHeight:"1rem",fontWeight:"400"}],"body-md":["0.875rem",{lineHeight:"1.25rem",fontWeight:"400"}]}
+}}};
+</script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface">
+
+<!-- LOGIN -->
+<section id="login" class="min-h-screen flex items-center justify-center px-4">
+  <form id="formLogin" class="w-full max-w-sm bg-surface-container-lowest rounded-lg p-6 shadow-sm space-y-3">
+    <div class="text-center"><span class="material-symbols-outlined text-primary text-[40px]">lock</span>
+      <h1 class="font-headline-md text-headline-md">Painel do dono</h1><p class="text-on-surface-variant font-body-sm">Pop Pet Center • Pedro Miranda</p></div>
+    <input id="email" type="email" autocomplete="username" required placeholder="E-mail" class="w-full h-12 px-4 rounded bg-surface-container-low outline-none focus:ring-2 focus:ring-primary-container"/>
+    <input id="senha" type="password" autocomplete="current-password" required placeholder="Senha" class="w-full h-12 px-4 rounded bg-surface-container-low outline-none focus:ring-2 focus:ring-primary-container"/>
+    <p id="erroLogin" role="alert" class="hidden bg-error-container text-on-error-container rounded p-3 font-label-md"></p>
+    <button class="w-full h-12 rounded-full bg-primary text-on-primary font-title-md">Entrar</button>
+  </form>
+</section>
+
+<!-- PAINEL -->
+<div id="app" class="hidden">
+<header class="fixed top-0 w-full z-40 pt-safe bg-surface/90 backdrop-blur-xl shadow-[0_4px_16px_rgba(31,168,95,0.06)]">
+  <div class="h-16 px-4 flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2 min-w-0">
+      <img src="logo.png" alt="" class="h-8 w-auto" onerror="this.style.display='none'"/>
+      <div class="min-w-0"><p class="font-title-md text-primary truncate leading-tight">Painel do Dono</p><p class="font-label-sm text-on-surface-variant truncate">Pop Pet Center • Pedro Miranda</p></div>
+    </div>
+    <div class="flex gap-1">
+      <button id="atualizar" aria-label="Atualizar" class="w-10 h-10 rounded-full bg-surface-container-high text-primary flex items-center justify-center"><span class="material-symbols-outlined">refresh</span></button>
+      <button id="sair" aria-label="Sair" class="w-10 h-10 rounded-full bg-surface-container-high text-primary flex items-center justify-center"><span class="material-symbols-outlined">logout</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="pt-20 pb-28 px-4 space-y-3 max-w-2xl mx-auto">
+  <section class="grid grid-cols-3 gap-2">
+    <div class="bg-surface-container-lowest rounded p-3 shadow-sm"><p class="font-label-sm text-on-surface-variant">Pedidos hoje</p><p id="rHoje" class="font-title-md font-bold">0</p><p id="rHojeV" class="font-label-sm text-primary truncate">R$ 0,00</p></div>
+    <div class="bg-surface-container-lowest rounded p-3 shadow-sm"><p class="font-label-sm text-on-surface-variant">Novos</p><p id="rNovos" class="font-title-md font-bold">0</p><p class="font-label-sm text-secondary">a confirmar</p></div>
+    <div class="bg-surface-container-lowest rounded p-3 shadow-sm"><p class="font-label-sm text-on-surface-variant">Estoque baixo</p><p id="rBaixo" class="font-title-md font-bold">0</p><p class="font-label-sm text-secondary">produtos</p></div>
+  </section>
+
+  <!-- PEDIDOS -->
+  <section id="vPedidos" class="space-y-3">
+    <div id="fPedidos" class="flex gap-2 overflow-x-auto"></div>
+    <div id="listaPedidos" class="space-y-3"></div>
+  </section>
+
+  <!-- PRODUTOS -->
+  <section id="vProdutos" class="hidden space-y-3">
+    <button id="novo" class="w-full h-12 rounded-full bg-primary text-on-primary font-title-md flex items-center justify-center gap-2"><span class="material-symbols-outlined">add_circle</span>Novo Produto</button>
+    <div class="relative"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+      <input id="busca" type="search" placeholder="Buscar produto..." class="w-full h-11 pl-10 pr-4 rounded bg-surface-container-lowest outline-none focus:ring-2 focus:ring-primary-container"/></div>
+    <div id="fCats" class="flex gap-2 overflow-x-auto"></div>
+    <div id="listaProdutos" class="space-y-3"></div>
+  </section>
+
+  <!-- CATEGORIAS -->
+  <section id="vCats" class="hidden space-y-3">
+    <form id="formCat" class="flex gap-2"><input id="novaCat" required maxlength="40" placeholder="Nova categoria" class="flex-1 h-12 px-4 rounded bg-surface-container-lowest outline-none focus:ring-2 focus:ring-primary-container"/><button class="px-5 rounded-full bg-primary text-on-primary font-label-md">Adicionar</button></form>
+    <div id="listaCats" class="space-y-2"></div>
+  </section>
+</main>
+
+<nav class="fixed bottom-0 w-full z-40 pb-safe bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_-4px_20px_rgba(31,168,95,0.08)]">
+  <div class="flex justify-around h-16 items-center">
+    <button data-aba="pedidos" class="relative flex flex-col items-center gap-0.5 min-w-[72px]"><span class="material-symbols-outlined">receipt_long</span><span class="font-label-sm">Pedidos</span><span id="badgeNovos" class="hidden absolute -top-1 right-3 bg-secondary-container text-on-secondary-container text-[10px] font-bold min-w-[16px] h-4 px-1 rounded-full items-center justify-center">0</span></button>
+    <button data-aba="produtos" class="flex flex-col items-center gap-0.5 min-w-[72px]"><span class="material-symbols-outlined">inventory_2</span><span class="font-label-sm">Produtos</span></button>
+    <button data-aba="cats" class="flex flex-col items-center gap-0.5 min-w-[72px]"><span class="material-symbols-outlined">category</span><span class="font-label-sm">Categorias</span></button>
+  </div>
+</nav>
+
+<!-- FORMULÁRIO DE PRODUTO -->
+<div id="sheet" class="hidden fixed inset-0 z-50 bg-black/50 items-end justify-center">
+  <form id="formProd" class="bg-surface-container-lowest w-full max-w-lg max-h-[92%] overflow-auto rounded-t-lg p-5 space-y-3 pb-safe">
+    <div class="flex justify-between items-center"><h2 id="tProd" class="font-headline-md">Novo produto</h2><button type="button" id="fechar" aria-label="Fechar" class="material-symbols-outlined text-outline">close</button></div>
+    <div class="flex items-center gap-3"><img id="prev" alt="" class="hidden w-16 h-16 rounded object-cover bg-surface-container"/><input id="f_foto" type="file" accept="image/*" class="text-body-sm"/></div>
+    <input id="f_nome" required maxlength="80" placeholder="Nome do produto" class="w-full h-12 px-4 rounded bg-surface-container-low outline-none focus:ring-2 focus:ring-primary-container"/>
+    <select id="f_cat" class="w-full h-12 px-3 rounded bg-surface-container-low"></select>
+    <div class="grid grid-cols-3 gap-2">
+      <label class="font-label-md">Preço (R$)<input id="f_preco" required inputmode="decimal" placeholder="0,00" class="mt-1 w-full h-11 px-3 rounded bg-surface-container-low font-body-md"/></label>
+      <label class="font-label-md">Estoque<input id="f_est" required inputmode="numeric" placeholder="0" class="mt-1 w-full h-11 px-3 rounded bg-surface-container-low font-body-md"/></label>
+      <label class="font-label-md">Aviso abaixo de<input id="f_min" inputmode="numeric" value="3" class="mt-1 w-full h-11 px-3 rounded bg-surface-container-low font-body-md"/></label>
+    </div>
+    <textarea id="f_desc" rows="3" maxlength="300" placeholder="Descrição" class="w-full p-3 rounded bg-surface-container-low outline-none focus:ring-2 focus:ring-primary-container"></textarea>
+    <label class="flex items-center gap-2"><input id="f_disp" type="checkbox" checked/> Disponível na loja</label>
+    <label class="flex items-center gap-2"><input id="f_dest" type="checkbox"/> Destaque (aparece primeiro)</label>
+    <button class="w-full h-12 rounded-full bg-primary text-on-primary font-title-md">Salvar</button>
+    <button type="button" id="excluir" class="hidden w-full h-11 rounded-full text-error font-label-md">Excluir produto</button>
+  </form>
+</div>
+
+<div id="toast" role="status" class="hidden fixed left-4 right-4 bottom-20 z-[70] max-w-sm mx-auto bg-inverse-surface text-white rounded-full px-5 py-3 text-center font-label-md"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+const CFG=window.CONFIG, $=id=>document.getElementById(id), db=supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY);
+const brl=v=>Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=v=>parseFloat(String(v||"0").replace(/[^\d,.-]/g,"").replace(/\.(?=\d{3})/g,"").replace(",","."))||0;
+const STATUS={novo:"Novos",confirmado:"Confirmados",entregue:"Entregues",cancelado:"Cancelados",todos:"Todos"};
+let pedidos=[],produtos=[],cats=[],aba="pedidos",fStatus="novo",fCat="todas",editId=null,fotoAtual="",tT,canal;
+const chip=(ativo,txt,attr)=>`<button ${attr} class="shrink-0 px-3.5 py-1.5 rounded-full font-label-md ${ativo?"bg-primary text-on-primary":"bg-surface-container-lowest text-on-surface-variant"}">${txt}</button>`;
+const toast=m=>{const t=$("toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(tT);tT=setTimeout(()=>t.classList.add("hidden"),3200)};
+
+// ---------- login ----------
+const erroLogin=m=>{const e=$("erroLogin");e.textContent=m;e.classList.toggle("hidden",!m)};
+$("formLogin").onsubmit=async e=>{e.preventDefault();erroLogin("");
+  const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("senha").value});
+  if(error)return erroLogin("E-mail ou senha incorretos.");entrar()};
+$("sair").onclick=async()=>{await db.auth.signOut();location.reload()};
+async function entrar(){
+  const {data:s}=await db.auth.getSession();if(!s.session)return;
+  const {data:ok}=await db.rpc("is_admin");
+  if(!ok){await db.auth.signOut();return erroLogin("Este usuário não tem acesso ao painel.")}
+  $("login").classList.add("hidden");$("app").classList.remove("hidden");
+  await carregar();
+  if(!canal)canal=db.channel("pedidos-live").on("postgres_changes",{event:"INSERT",schema:"public",table:"pedidos"},()=>{toast("Novo pedido recebido!");carregar()}).subscribe();
+}
+
+// ---------- dados ----------
+async function carregar(){
+  const [c,p,o]=await Promise.all([db.from("categorias").select("id,nome,ordem").order("ordem"),db.from("produtos").select("*").order("nome"),
+    db.from("pedidos").select("*,pedido_itens(nome,preco,quantidade)").order("criado_em",{ascending:false}).limit(100)]);
+  if(c.error||p.error||o.error){console.error(c.error||p.error||o.error);return toast("Erro ao carregar os dados.")}
+  cats=c.data;produtos=p.data;pedidos=o.data;desenhar();
+}
+function desenhar(){
+  const hoje=new Date().toDateString(),dh=pedidos.filter(o=>new Date(o.criado_em).toDateString()===hoje&&o.status!=="cancelado");
+  const novos=pedidos.filter(o=>o.status==="novo").length;
+  $("rHoje").textContent=dh.length;$("rHojeV").textContent=brl(dh.reduce((s,o)=>s+Number(o.total),0));
+  $("rNovos").textContent=novos;$("rBaixo").textContent=produtos.filter(p=>p.estoque<=p.estoque_minimo).length;
+  const b=$("badgeNovos");b.textContent=novos;b.classList.toggle("hidden",!novos);b.classList.toggle("flex",novos>0);
+  ["pedidos","produtos","cats"].forEach(a=>{$("v"+{pedidos:"Pedidos",produtos:"Produtos",cats:"Cats"}[a]).classList.toggle("hidden",a!==aba)});
+  document.querySelectorAll("[data-aba]").forEach(x=>x.className=x.className.replace(/ ?text-(primary|on-surface-variant)( font-bold)?/g,"")+(x.dataset.aba===aba?" text-primary font-bold":" text-on-surface-variant"));
+  if(aba==="pedidos")vPedidos();else if(aba==="produtos")vProdutos();else vCats();
+}
+document.querySelectorAll("[data-aba]").forEach(b=>b.onclick=()=>{aba=b.dataset.aba;desenhar()});
+$("atualizar").onclick=()=>carregar().then(()=>toast("Atualizado."));
+
+// ---------- pedidos ----------
+function vPedidos(){
+  $("fPedidos").innerHTML=Object.keys(STATUS).map(s=>chip(s===fStatus,STATUS[s],`data-fs="${s}"`)).join("");
+  const l=pedidos.filter(o=>fStatus==="todos"||o.status===fStatus);
+  $("listaPedidos").innerHTML=l.length?l.map(o=>{
+    const quando=new Date(o.criado_em).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+    const acoes=o.status==="novo"?`<button data-ac="confirmar" data-id="${o.id}" class="flex-1 h-10 rounded-full bg-primary text-on-primary font-label-md">Confirmar</button>`
+      :o.status==="confirmado"?`<button data-ac="entregar" data-id="${o.id}" class="flex-1 h-10 rounded-full bg-primary text-on-primary font-label-md">Marcar entregue</button>`:"";
+    const cancel=(o.status==="novo"||o.status==="confirmado")?`<button data-ac="cancelar" data-id="${o.id}" class="h-10 px-4 rounded-full text-error font-label-md">Cancelar</button>`:"";
+    return `<article class="bg-surface-container-lowest rounded p-4 shadow-sm space-y-2">
+      <div class="flex justify-between items-start gap-2"><div><p class="font-title-md">Pedido #${o.numero} • ${esc(o.cliente_nome)}</p><p class="font-body-sm text-on-surface-variant">${quando} • ${o.tipo_entrega==="entrega"?"Entrega":"Retirada"} • ${STATUS[o.status].replace(/s$/,"")}</p></div><p class="font-title-md text-primary font-bold">${brl(o.total)}</p></div>
+      <ul class="font-body-md">${(o.pedido_itens||[]).map(i=>`<li>${i.quantidade}x ${esc(i.nome)} <span class="text-on-surface-variant">— ${brl(i.preco*i.quantidade)}</span></li>`).join("")}</ul>
+      ${o.cliente_endereco?`<p class="font-body-sm text-on-surface-variant">📍 ${esc(o.cliente_endereco)}</p>`:""}${o.observacao?`<p class="font-body-sm text-on-surface-variant">📝 ${esc(o.observacao)}</p>`:""}
+      <a href="https://wa.me/55${esc(o.cliente_telefone||"")}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 font-label-md text-primary underline">Chamar cliente no WhatsApp</a>
+      ${acoes||cancel?`<div class="flex gap-2 pt-1">${acoes}${cancel}</div>`:""}</article>`}).join(""):`<p class="text-center text-on-surface-variant py-8">Nenhum pedido aqui.</p>`;
+}
+$("fPedidos").onclick=e=>{const b=e.target.closest("[data-fs]");if(b){fStatus=b.dataset.fs;vPedidos()}};
+$("listaPedidos").onclick=async e=>{
+  const b=e.target.closest("[data-ac]");if(!b)return;const id=b.dataset.id,a=b.dataset.ac;
+  if(a==="cancelar"){if(!confirm("Cancelar este pedido? O estoque será devolvido."))return;
+    const {error}=await db.rpc("cancelar_pedido",{p_pedido:id});if(error)return toast(error.message)}
+  else{const {error}=await db.from("pedidos").update({status:a==="confirmar"?"confirmado":"entregue"}).eq("id",id);if(error)return toast("Não foi possível atualizar.")}
+  await carregar();
+};
+
+// ---------- produtos ----------
+function vProdutos(){
+  $("fCats").innerHTML=chip(fCat==="todas",`Todas (${produtos.length})`,'data-fc="todas"')+cats.map(c=>chip(fCat===c.id,esc(c.nome),`data-fc="${c.id}"`)).join("");
+  const q=$("busca").value.trim().toLowerCase(),nome=id=>(cats.find(c=>c.id===id)||{}).nome||"Sem categoria";
+  const l=produtos.filter(p=>(fCat==="todas"||p.categoria_id===fCat)&&p.nome.toLowerCase().includes(q));
+  $("listaProdutos").innerHTML=l.length?l.map(p=>{const baixo=p.estoque<=p.estoque_minimo;return `<div class="bg-surface-container-low rounded p-3 space-y-2">
+    <div class="flex items-center gap-3">
+      ${p.foto_url?`<img src="${esc(p.foto_url)}" alt="" class="w-14 h-14 rounded object-cover bg-surface-container-high shrink-0"/>`:`<div class="w-14 h-14 rounded bg-surface-container-high flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-outline">pets</span></div>`}
+      <div class="min-w-0 flex-1"><p class="font-label-sm text-primary truncate">${esc(nome(p.categoria_id))}</p><p class="font-title-md truncate leading-snug">${esc(p.nome)}</p>
+        <p class="font-body-sm ${baixo?"text-secondary font-bold":"text-on-surface-variant"}">Estoque: ${p.estoque}${baixo?" (baixo)":""}</p></div>
+      <button data-edit="${p.id}" aria-label="Editar" class="w-9 h-9 rounded-full bg-surface-container-lowest text-on-surface-variant flex items-center justify-center shadow-sm shrink-0"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+    </div>
+    <div class="flex items-center justify-between bg-surface-container-lowest/60 rounded px-2.5 py-1.5">
+      <label class="flex items-center gap-1.5 font-label-sm text-on-surface-variant">Preço: R$ <input data-preco="${p.id}" inputmode="decimal" value="${String(p.preco).replace(".",",")}" class="w-16 font-title-md text-primary font-bold bg-white rounded px-1 outline-none focus:ring-2 focus:ring-primary-container"/></label>
+      <button data-disp="${p.id}" aria-pressed="${p.disponivel}" class="flex items-center gap-2 font-label-sm">Na loja <span class="relative inline-flex h-6 w-11 rounded-full p-0.5 ${p.disponivel?"bg-primary-container":"bg-outline/40"}"><span class="inline-block h-5 w-5 rounded-full bg-white shadow transition ${p.disponivel?"translate-x-5":""}"></span></span></button>
+    </div></div>`}).join(""):`<p class="text-center text-on-surface-variant py-8">Nenhum produto encontrado.</p>`;
+}
+$("busca").oninput=vProdutos;
+$("fCats").onclick=e=>{const b=e.target.closest("[data-fc]");if(b){fCat=b.dataset.fc;vProdutos()}};
+$("listaProdutos").onclick=async e=>{
+  const ed=e.target.closest("[data-edit]"),dp=e.target.closest("[data-disp]");
+  if(ed)return abrirForm(ed.dataset.edit);
+  if(dp){const p=produtos.find(x=>x.id===dp.dataset.disp),{error}=await db.from("produtos").update({disponivel:!p.disponivel}).eq("id",p.id);
+    if(error)return toast("Não foi possível atualizar.");p.disponivel=!p.disponivel;vProdutos()}
+};
+$("listaProdutos").onchange=async e=>{
+  const i=e.target.closest("[data-preco]");if(!i)return;const v=num(i.value),p=produtos.find(x=>x.id===i.dataset.preco);
+  if(v<0)return;const {error}=await db.from("produtos").update({preco:v}).eq("id",p.id);
+  if(error)return toast("Não foi possível salvar o preço.");p.preco=v;i.value=String(v).replace(".",",");toast("Preço atualizado.");
+};
+
+// ---------- formulário de produto ----------
+function abrirForm(id){
+  const p=id?produtos.find(x=>x.id===id):null;editId=id||null;fotoAtual=p?p.foto_url||"":"";
+  $("tProd").textContent=p?"Editar produto":"Novo produto";$("excluir").classList.toggle("hidden",!p);
+  $("f_cat").innerHTML=`<option value="">Sem categoria</option>`+cats.map(c=>`<option value="${c.id}">${esc(c.nome)}</option>`).join("");
+  $("f_nome").value=p?p.nome:"";$("f_cat").value=p&&p.categoria_id||"";$("f_preco").value=p?String(p.preco).replace(".",","):"";
+  $("f_est").value=p?p.estoque:"";$("f_min").value=p?p.estoque_minimo:3;$("f_desc").value=p&&p.descricao||"";
+  $("f_disp").checked=p?p.disponivel:true;$("f_dest").checked=p?p.destaque:false;$("f_foto").value="";
+  $("prev").src=fotoAtual;$("prev").classList.toggle("hidden",!fotoAtual);
+  $("sheet").classList.remove("hidden");$("sheet").classList.add("flex");
+}
+const fecharForm=()=>{$("sheet").classList.add("hidden");$("sheet").classList.remove("flex")};
+$("novo").onclick=()=>abrirForm();$("fechar").onclick=fecharForm;
+const reduzir=f=>new Promise(r=>{const i=new Image();i.onload=()=>{const k=Math.min(1,900/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);c.toBlob(r,"image/jpeg",.82)};i.src=URL.createObjectURL(f)});
+$("formProd").onsubmit=async e=>{
+  e.preventDefault();const btn=e.submitter;btn.disabled=true;let foto=fotoAtual;const f=$("f_foto").files[0];
+  if(f){const path=crypto.randomUUID()+".jpg",up=await db.storage.from("produtos").upload(path,await reduzir(f),{contentType:"image/jpeg"});
+    if(up.error){btn.disabled=false;return toast("Erro ao enviar a foto.")}foto=db.storage.from("produtos").getPublicUrl(path).data.publicUrl}
+  const d={nome:$("f_nome").value.trim(),categoria_id:$("f_cat").value||null,preco:num($("f_preco").value),estoque:Math.max(0,parseInt($("f_est").value)||0),
+    estoque_minimo:Math.max(0,parseInt($("f_min").value)||0),descricao:$("f_desc").value.trim()||null,foto_url:foto||null,disponivel:$("f_disp").checked,destaque:$("f_dest").checked};
+  const {error}=editId?await db.from("produtos").update(d).eq("id",editId):await db.from("produtos").insert(d);
+  btn.disabled=false;if(error)return toast("Não foi possível salvar o produto.");
+  fecharForm();toast("Produto salvo.");carregar();
+};
+$("excluir").onclick=async()=>{
+  if(!confirm("Excluir este produto? Pedidos antigos continuam guardados."))return;
+  const {error}=await db.from("produtos").delete().eq("id",editId);if(error)return toast("Não foi possível excluir.");
+  fecharForm();toast("Produto excluído.");carregar();
+};
+
+// ---------- categorias ----------
+function vCats(){
+  $("listaCats").innerHTML=cats.length?cats.map(c=>`<div class="flex gap-2 items-center bg-surface-container-lowest rounded p-2">
+    <input data-cn="${c.id}" value="${esc(c.nome)}" maxlength="40" class="flex-1 h-10 px-3 rounded bg-surface-container-low outline-none focus:ring-2 focus:ring-primary-container"/>
+    <button data-cs="${c.id}" class="px-3 h-10 rounded-full bg-primary text-on-primary font-label-md">Salvar</button>
+    <button data-cd="${c.id}" aria-label="Excluir" class="w-10 h-10 rounded-full text-error flex items-center justify-center"><span class="material-symbols-outlined">delete</span></button></div>`).join(""):`<p class="text-center text-on-surface-variant py-8">Nenhuma categoria.</p>`;
+}
+$("formCat").onsubmit=async e=>{e.preventDefault();
+  const {error}=await db.from("categorias").insert({nome:$("novaCat").value.trim(),ordem:cats.reduce((m,c)=>Math.max(m,c.ordem),0)+1});
+  if(error)return toast("Não foi possível criar (o nome já existe?).");$("novaCat").value="";carregar()};
+$("listaCats").onclick=async e=>{
+  const s=e.target.closest("[data-cs]"),d=e.target.closest("[data-cd]");
+  if(s){const nome=document.querySelector(`[data-cn="${s.dataset.cs}"]`).value.trim();if(!nome)return;
+    const {error}=await db.from("categorias").update({nome}).eq("id",s.dataset.cs);if(error)return toast("Não foi possível salvar.");toast("Categoria salva.");carregar()}
+  if(d){if(!confirm("Excluir a categoria? Os produtos dela ficam sem categoria."))return;
+    const {error}=await db.from("categorias").delete().eq("id",d.dataset.cd);if(error)return toast("Não foi possível excluir.");carregar()}
+};
+
+if(CFG.SUPABASE_URL.includes("SEU-PROJETO"))erroLogin("Falta configurar o config.js com os dados do Supabase.");else entrar();
+</script>
+</body>
+</html>

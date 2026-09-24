@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Pop Pet Center – Pedro Miranda</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;family=Quicksand:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+  @layer base{html,body{width:100%;margin:0;padding:0}body{overscroll-behavior:none}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px)}.pt-safe{padding-top:env(safe-area-inset-top,0px)}}
+  ::-webkit-scrollbar{display:none}
+  body{min-height:100dvh}
+</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { darkMode: "class", theme: { extend: {
+  "colors": { "background": "#e9ffed", "outline-variant": "#bccabc", "secondary-container": "#fd8b18", "surface-container-highest": "#d0e8d6", "primary": "#006d39", "inverse-on-surface": "#dff7e4", "secondary-fixed": "#ffdcc4", "on-primary-container": "#003418", "surface-container": "#dcf4e1", "outline": "#6d7a6e", "surface": "#e9ffed", "tertiary-fixed": "#66ff8e", "tertiary": "#006d2f", "on-secondary-container": "#623000", "primary-container": "#1fa85f", "secondary": "#924c00", "on-error-container": "#93000a", "on-secondary": "#ffffff", "inverse-surface": "#213528", "on-surface-variant": "#3d4a3f", "on-surface": "#0b1f14", "tertiary-container": "#00aa4d", "error": "#ba1a1a", "surface-container-high": "#d6eedc", "on-primary": "#ffffff", "surface-container-lowest": "#ffffff", "surface-dim": "#c8e0ce", "error-container": "#ffdad6", "surface-container-low": "#e1fae7", "secondary-fixed-dim": "#ffb781" },
+  "borderRadius": { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+  "spacing": { "space-xs": "0.25rem", "space-sm": "0.5rem", "space-lg": "1.25rem", "space-md": "1rem", "margin": "1rem", "gutter": "1rem", "space-xl": "1.75rem" },
+  "fontFamily": { "title-md": ["Quicksand"], "label-lg": ["Nunito Sans"], "headline-md": ["Quicksand"], "body-sm": ["Nunito Sans"], "body-md": ["Nunito Sans"], "headline-lg": ["Quicksand"], "label-sm": ["Nunito Sans"], "label-md": ["Nunito Sans"], "body-lg": ["Nunito Sans"], "headline-xl": ["Quicksand"] },
+  "fontSize": { "title-md": ["1.125rem", { "lineHeight": "1.5rem", "fontWeight": "600" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "700" }], "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "fontWeight": "600" }], "body-sm": ["0.75rem", { "lineHeight": "1rem", "fontWeight": "400" }], "body-md": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "headline-lg": ["1.5rem", { "lineHeight": "2rem", "fontWeight": "700" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "fontWeight": "700" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "fontWeight": "700" }], "body-lg": ["1rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "headline-xl": ["2rem", { "lineHeight": "2.5rem", "fontWeight": "700" }] }
+} } };
+</script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col">
+
+<!-- Cabeçalho -->
+<header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_4px_16px_rgba(31,168,95,0.06)]">
+  <div class="h-16 px-margin flex items-center gap-space-sm">
+    <img src="logo.png" alt="Logo Pop Pet Center" class="h-8 w-auto object-contain" onerror="this.style.display='none'"/>
+    <div class="flex flex-col min-w-0">
+      <span id="nomeLoja" class="font-title-md text-title-md text-primary truncate leading-tight">Pop Pet Center</span>
+      <span id="nomeUnidade" class="font-label-sm text-label-sm text-on-surface-variant truncate">Pedro Miranda • Senador Canedo</span>
+    </div>
+  </div>
+</header>
+
+<main class="flex flex-col relative w-full pt-16 pb-40 bg-surface px-margin">
+  <div class="flex flex-col w-full gap-space-lg">
+
+    <!-- Busca -->
+    <div class="pt-space-xs">
+      <div class="flex items-center bg-surface-container-lowest rounded-full px-space-md py-2.5 shadow-[0_2px_10px_rgba(31,168,95,0.08)]">
+        <span class="material-symbols-outlined text-primary text-[22px] mr-2">search</span>
+        <input id="busca" type="search" class="w-full bg-transparent outline-none font-body-md text-body-md text-on-surface placeholder:text-outline" placeholder="Buscar ração, petisco, remédio..." aria-label="Buscar produto"/>
+      </div>
+    </div>
+
+    <!-- Aviso de como pedir -->
+    <div class="bg-surface-container-low rounded-2xl p-space-sm px-space-md flex items-center gap-space-xs shadow-[0_2px_8px_rgba(31,168,95,0.06)]">
+      <div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-primary text-[18px]">chat</span>
+      </div>
+      <div class="flex flex-col min-w-0">
+        <span class="font-label-md text-label-md text-primary font-bold">Peça aqui e finalize pelo WhatsApp</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Monte o carrinho e combine entrega ou retirada com a loja</span>
+      </div>
+    </div>
+
+    <!-- Banner -->
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-container to-tertiary text-on-primary p-space-lg shadow-[0_6px_18px_rgba(31,168,95,0.18)]">
+      <div class="absolute -right-8 -top-8 w-36 h-36 bg-surface-container-lowest/10 rounded-full blur-xl pointer-events-none"></div>
+      <span class="material-symbols-outlined absolute right-3 bottom-1 text-[96px] text-on-primary/20 pointer-events-none select-none" aria-hidden="true">pets</span>
+      <div class="relative z-10 flex flex-col items-start gap-space-xs max-w-[70%]">
+        <div class="inline-flex items-center gap-1 bg-surface-container-lowest/20 px-2.5 py-1 rounded-full">
+          <span class="material-symbols-outlined text-[14px]">store</span>
+          <span class="font-label-sm text-label-sm tracking-wide">Unidade Pedro Miranda</span>
+        </div>
+        <h2 class="font-headline-md text-headline-md font-bold leading-tight mt-1">O melhor para o seu pet aqui</h2>
+        <p class="font-body-sm text-body-sm text-on-primary/90 leading-snug">Qualidade, carinho e preço justo pertinho de você!</p>
+      </div>
+    </div>
+
+    <!-- Departamentos -->
+    <div class="flex flex-col gap-space-xs">
+      <h3 class="font-title-md text-title-md text-on-surface font-bold">Departamentos</h3>
+      <div id="chips" class="flex gap-space-xs overflow-x-auto pb-1 pt-1 -mx-margin px-margin snap-x" role="group" aria-label="Departamentos"></div>
+    </div>
+
+    <!-- Produtos -->
+    <div class="flex flex-col gap-space-sm">
+      <div class="flex items-center justify-between">
+        <h3 class="font-title-md text-title-md text-on-surface font-bold">Nossos produtos</h3>
+        <span id="contagem" class="font-label-sm text-label-sm text-on-surface-variant"></span>
+      </div>
+      <div id="grade" class="grid grid-cols-2 gap-space-sm">
+        <p class="col-span-2 text-on-surface-variant py-6 text-center">Carregando produtos...</p>
+      </div>
+    </div>
+
+    <!-- Loja física -->
+    <div class="bg-surface-container-high rounded-2xl p-space-md flex items-center gap-space-md shadow-[0_2px_10px_rgba(31,168,95,0.08)]">
+      <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-[26px]">storefront</span>
+      </div>
+      <div class="flex flex-col min-w-0 flex-1">
+        <h4 class="font-title-md text-title-md text-on-surface font-bold">Visite nossa loja</h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Avenida Castro Alves, S/N, Qd.12 Lt.6, Residencial Pedro Miranda, Senador Canedo – GO.</p>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mt-1">Seg a Sex 8h às 20h · Sáb 8h às 18h · Dom 8h às 13h</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Barra do carrinho -->
+<div id="barra" class="hidden fixed bottom-20 left-4 right-4 z-40 max-w-[440px] mx-auto">
+  <div class="bg-on-surface text-surface-container-lowest rounded-full px-4 py-2.5 flex items-center justify-between shadow-[0_8px_24px_rgba(11,31,20,0.35)]">
+    <div class="flex items-center gap-2.5 min-w-0">
+      <div id="barraQtd" class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xs shrink-0">0</div>
+      <div class="flex flex-col min-w-0">
+        <span id="barraTxt" class="font-label-md text-label-md truncate">Ver carrinho</span>
+        <span id="barraTotal" class="font-title-md text-title-md font-bold text-secondary-fixed-dim leading-none">R$ 0,00</span>
+      </div>
+    </div>
+    <a href="carrinho.html" class="bg-primary text-on-primary px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-1 shrink-0 active:scale-95 transition-transform">
+      <span>Continuar</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+    </a>
+  </div>
+</div>
+
+<!-- Botão flutuante do WhatsApp -->
+<a id="zap" aria-label="Falar com a loja pelo WhatsApp" target="_blank" rel="noopener noreferrer" href="#"
+   class="fixed bottom-36 right-4 z-40 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-[0_8px_24px_rgba(37,211,102,0.38)] active:scale-95 transition-all">
+  <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.436 5.176L2 22l4.981-1.309A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.167c-1.637 0-3.167-.47-4.462-1.283l-.32-.201-2.957.776.79-2.883-.209-.333A8.132 8.132 0 013.833 12c0-4.503 3.664-8.167 8.167-8.167 4.503 0 8.167 3.664 8.167 8.167 0 4.503-3.664 8.167-8.167 8.167z"/><path d="M15.423 14.416c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.302c-.087.087-.179.18-.077.355.101.174.449.741.965 1.201.664.593 1.224.776 1.397.863.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
+</a>
+
+<!-- Menu de baixo (o painel do dono NÃO aparece aqui) -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_20px_rgba(31,168,95,0.08)]">
+  <div class="flex justify-around items-center h-16 px-margin">
+    <a href="index.html" aria-current="page" class="flex flex-col items-center justify-center min-w-[64px] min-h-[44px] gap-0.5 text-primary font-bold">
+      <span class="material-symbols-outlined text-[24px]">storefront</span><span class="font-label-sm text-label-sm">Loja</span>
+    </a>
+    <a href="carrinho.html" class="relative flex flex-col items-center justify-center min-w-[64px] min-h-[44px] gap-0.5 text-on-surface-variant">
+      <div class="relative flex items-center justify-center">
+        <span class="material-symbols-outlined text-[24px]">shopping_bag</span>
+        <span id="navBadge" class="hidden absolute -top-1 -right-2 bg-secondary-container text-on-primary text-[10px] font-bold h-4 min-w-[16px] px-1 rounded-full items-center justify-center">0</span>
+      </div>
+      <span class="font-label-sm text-label-sm">Carrinho</span>
+    </a>
+  </div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="cart.js"></script>
+<script>
+const CFG = window.CONFIG;
+const $ = id => document.getElementById(id);
+const brl = v => Number(v).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const ICONES = { "rações": "pets", "petiscos": "cookie", "brinquedos": "sports_baseball", "higiene": "soap", "acessórios": "toll", "vacinas e medicamentos": "vaccines", "vacinas": "vaccines", "veterinário": "stethoscope", "banho e tosa": "shower" };
+const icone = nome => ICONES[String(nome).toLowerCase()] || "label";
+
+$("nomeLoja").textContent = CFG.LOJA;
+$("nomeUnidade").textContent = CFG.UNIDADE;
+$("zap").href = `https://wa.me/${CFG.WHATSAPP}?text=${encodeURIComponent("Olá, gostaria de fazer um pedido na " + CFG.LOJA + " " + CFG.UNIDADE.split(" • ")[0])}`;
+
+let categorias = [], produtos = [], catAtiva = "todos";
+const db = supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY);
+
+function chips() {
+  const lista = [{ id: "todos", nome: "Todos" }, ...categorias];
+  $("chips").innerHTML = lista.map(c => {
+    const ativo = c.id === catAtiva;
+    const cls = ativo ? "bg-secondary-container text-on-secondary-container" : "bg-surface-container-lowest text-on-surface";
+    const ic = c.id === "todos" ? "apps" : icone(c.nome);
+    return `<button type="button" data-cat="${esc(c.id)}" aria-pressed="${ativo}" class="shrink-0 snap-start flex items-center gap-1.5 px-4 py-2 ${cls} rounded-full font-label-md text-label-md shadow-[0_2px_6px_rgba(31,168,95,0.06)] active:scale-95 transition-all"><span class="material-symbols-outlined text-[18px] ${ativo ? "" : "text-secondary-container"}">${ic}</span><span>${esc(c.nome)}</span></button>`;
+  }).join("");
+}
+
+function grade() {
+  const q = $("busca").value.trim().toLowerCase();
+  const nomeCat = id => (categorias.find(c => c.id === id) || {}).nome || "";
+  const lista = produtos.filter(p =>
+    (catAtiva === "todos" || p.categoria_id === catAtiva) &&
+    (p.nome.toLowerCase().includes(q) || (p.descricao || "").toLowerCase().includes(q)));
+  $("contagem").textContent = `${lista.length} ${lista.length === 1 ? "item" : "itens"}`;
+  if (!lista.length) { $("grade").innerHTML = `<p class="col-span-2 text-on-surface-variant py-6 text-center">Nenhum produto encontrado.</p>`; return; }
+
+  $("grade").innerHTML = lista.map(p => {
+    const esgotado = p.estoque <= 0;
+    const baixo = !esgotado && p.estoque <= p.estoque_minimo;
+    const selo = esgotado ? `<span class="absolute top-2 left-2 z-10 bg-error-container text-on-error-container font-label-sm text-label-sm px-2 py-0.5 rounded-full">Esgotado</span>`
+      : baixo ? `<span class="absolute top-2 left-2 z-10 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-2 py-0.5 rounded-full shadow-sm">Últimas unidades</span>` : "";
+    const foto = p.foto_url ? `<img src="${esc(p.foto_url)}" alt="${esc(p.nome)}" loading="lazy" class="w-full h-full object-contain p-2 ${esgotado ? "opacity-50" : ""}"/>`
+      : `<span class="material-symbols-outlined text-[48px] text-outline-variant">pets</span>`;
+    const sub = baixo ? `<span class="font-body-sm text-body-sm text-secondary font-bold">Restam ${p.estoque}</span>`
+      : `<span class="font-body-sm text-body-sm text-outline truncate">${esc(nomeCat(p.categoria_id))}</span>`;
+    const btn = esgotado
+      ? `<button type="button" disabled class="mt-2 w-full py-2 px-2 bg-surface-dim text-on-surface-variant rounded-full font-label-md text-label-md">Indisponível</button>`
+      : `<button type="button" data-add="${esc(p.id)}" class="mt-2 w-full py-2 px-2 bg-primary text-on-primary rounded-full font-label-md text-label-md flex items-center justify-center gap-1 active:scale-95 transition-all shadow-[0_2px_8px_rgba(0,109,57,0.2)]"><span class="material-symbols-outlined text-[16px]">add</span><span>Adicionar</span></button>`;
+    return `<div class="bg-surface-container-lowest rounded-2xl p-space-sm flex flex-col justify-between shadow-[0_3px_12px_rgba(31,168,95,0.07)] relative">
+      ${selo}
+      <div class="w-full h-32 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden mb-2">${foto}</div>
+      <div class="flex flex-col flex-1 justify-between">
+        <div>
+          <h4 class="font-headline-md text-headline-md text-on-surface font-bold text-sm leading-snug line-clamp-2">${esc(p.nome)}</h4>
+          <div class="mt-1 flex flex-col">${sub}<span class="font-title-md text-title-md text-primary font-bold">${brl(p.preco)}</span></div>
+        </div>
+        ${btn}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function barra() {
+  const n = Cart.count();
+  $("barra").classList.toggle("hidden", n === 0);
+  $("barraQtd").textContent = n;
+  $("barraTxt").textContent = `Ver carrinho (${n} ${n === 1 ? "item" : "itens"})`;
+  $("barraTotal").textContent = brl(Cart.total());
+  const b = $("navBadge");
+  b.textContent = n;
+  b.classList.toggle("hidden", n === 0);
+  b.classList.toggle("flex", n > 0);
+}
+
+function retorno(btn, ok) {
+  const original = btn.innerHTML;
+  btn.disabled = true;
+  btn.classList.replace("bg-primary", ok ? "bg-tertiary-container" : "bg-surface-dim");
+  btn.innerHTML = ok ? '<span class="material-symbols-outlined text-[16px]">done</span><span>Adicionado!</span>' : "<span>Máximo no estoque</span>";
+  setTimeout(() => {
+    btn.classList.replace(ok ? "bg-tertiary-container" : "bg-surface-dim", "bg-primary");
+    btn.innerHTML = original;
+    btn.disabled = false;
+  }, 1200);
+}
+
+$("chips").onclick = e => { const b = e.target.closest("[data-cat]"); if (b) { catAtiva = b.dataset.cat; chips(); grade(); } };
+$("busca").oninput = grade;
+$("grade").onclick = e => {
+  const b = e.target.closest("[data-add]"); if (!b) return;
+  const p = produtos.find(x => x.id === b.dataset.add); if (!p) return;
+  retorno(b, Cart.add(p));
+};
+document.addEventListener("cart:change", barra);
+
+async function iniciar() {
+  barra();
+  if (CFG.SUPABASE_URL.includes("SEU-PROJETO")) {
+    $("grade").innerHTML = `<p class="col-span-2 text-error py-6 text-center">Falta configurar o arquivo config.js com os dados do Supabase.</p>`;
+    return;
+  }
+  const [c, p] = await Promise.all([
+    db.from("categorias").select("id,nome").order("ordem"),
+    db.from("produtos").select("id,nome,descricao,preco,foto_url,estoque,estoque_minimo,categoria_id").order("destaque", { ascending: false }).order("nome")
+  ]);
+  if (c.error || p.error) {
+    console.error(c.error || p.error);
+    $("grade").innerHTML = `<p class="col-span-2 text-error py-6 text-center">Não foi possível carregar os produtos. Atualize a página.</p>`;
+    return;
+  }
+  categorias = c.data; produtos = p.data;
+  chips(); grade();
+}
+iniciar();
+</script>
+</body>
+</html>
