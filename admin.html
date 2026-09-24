@@ -108,7 +108,15 @@ fontSize:{"title-md":["1.125rem",{lineHeight:"1.5rem",fontWeight:"600"}],"headli
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
+<script>
+window.CONFIG = {
+  SUPABASE_URL: "https://frwcxsnxvfdwskmgcenw.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZyd2N4c254dmZkd3NrbWdjZW53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyMjk4OTcsImV4cCI6MjEwNTgwNTg5N30.nR9_DT4TBZDCkYvoVE6VP-CCKSORFJ6L1tYudLXD1pY",
+  WHATSAPP: "5562993440382",
+  LOJA: "Pop Pet Center",
+  UNIDADE: "Pedro Miranda • Senador Canedo"
+};
+</script>
 <script>
 const CFG=window.CONFIG, $=id=>document.getElementById(id), db=supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY);
 const brl=v=>Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
